@@ -1,9 +1,9 @@
-# \<Project Name\> Scrum Team
+# \<Group 2\> Scrum Team
 ## Product Owner
-\<Team Member Name\>
+\<Ankith Gopi Krishna Avula\>
 ## Scrum Master
-\<Team Member Name\>
+\<Dandu Lakshmi Vaishnav Reddy\>
 ## Developers
-- \<Team Member Name\>
-- \<Team Member Name\>
-- \<Team Member Name\>
+- \<Pravalika Megavath\>
+- \<Navya Sree Ratakonda\>
+- \<Noor Mohammed Vempalli\>
