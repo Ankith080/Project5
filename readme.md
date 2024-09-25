@@ -1,6 +1,6 @@
 # \<Group 2\> Scrum Team
 ## Product Owner
-\<Ankith Gopi Krishna Avula\>
+\Ankith Gopi Krishna Avula\
 ## Scrum Master
 \<Dandu Lakshmi Vaishnav Reddy\>
 ## Developers
