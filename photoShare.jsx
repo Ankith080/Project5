@@ -24,7 +24,7 @@ class PhotoShare extends React.Component {
       <HashRouter>
       <div>
       <Grid container spacing={8}>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{flexGrow: 1}}>
           <TopBar/>
         </Grid>
         <div className="main-topbar-buffer"/>
