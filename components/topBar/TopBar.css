@@ -1,4 +1,12 @@
 .topbar-appBar {
-  height: 60;
-  justify-content: 'center';
+  height: 60px; /* Specify height with px */
+  justify-content: center;
+  position:fixed;
+}
+
+/* Ensure content is pushed down by the height of the AppBar */
+.main-content {
+  margin-top: 60px;
+   /* This should match the AppBar height */
+position:fixed;
 }
