@@ -1,29 +1,36 @@
 import React from 'react';
-import {
-  Typography
-} from '@mui/material';
+import { Typography, Button } from '@mui/material'; // Import Button from Material-UI
 import './userDetail.css';
+import { Link } from "react-router-dom";
+import { models } from '../../modelData/photoApp';
 
-
-/**
- * Define UserDetail, a React component of project #5
- */
 class UserDetail extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    return (
-      <Typography variant="body1">
-        This should be the UserDetail view of the PhotoShare app. Since
-        it is invoked from React Router the params from the route will be
-        in property match. So this should show details of user:
-        {this.props.match.params.userId}. You can fetch the model for the
-        user from window.models.userModel(userId).
-      </Typography>
-    );
-  }
+    handleViewPhotosClick = () => {
+        // Implement navigation to the user's photos when the button is clicked
+        const { history, match } = this.props;
+        const userId = match.params.userId;
+        history.push(`/photos/${userId}`);
+    };
+
+    render() {
+        const user = models.userModel(this.props.match.params.userId);
+        return (
+            <>
+                <Typography variant='h2'>User Details</Typography>
+                <Typography variant='body1'>Name: {`${user.first_name} ${user.last_name}`}</Typography>
+                <Typography variant='body1'>Location: {user.location}</Typography>
+                <Typography variant='body1'>Description: {user.description}</Typography>
+                <Typography variant='body1'>Occupation: {user.occupation}</Typography>
+                <Button variant="contained" color="primary" onClick={this.handleViewPhotosClick}>
+                    View Photos
+                </Button>
+            </>
+        );
+    }
 }
 
 export default UserDetail;
