@@ -1,50 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-}
-from '@mui/material';
+    Divider,
+    List,
+    ListItem,
+    ListItemText,
+    Typography,
+} from '@mui/material';
+import { Link } from 'react-router-dom';
+import FetchModel from '../../lib/fetchModelData';
 import './userList.css';
 
 /**
  * Define UserList, a React component of project #5
  */
-class UserList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function UserList() {
+    const [userList, setUserList] = useState([]);
 
-  render() {
+    useEffect(() => {
+        // Fetch the user list from the server
+        FetchModel('/user/list')
+            .then((response) => {
+                const users = response.data;
+                setUserList(users);
+            })
+            .catch((error) => {
+                console.error('Error fetching user list:', error);
+            });
+    }, []);
+
     return (
-      <div>
-        <Typography variant="body1">
-          This is the user list, which takes up 3/12 of the window.
-          You might choose to use <a href="https://mui.com/components/lists/">Lists</a> and <a href="https://mui.com/components/dividers/">Dividers</a> to
-          display your users like so:
-        </Typography>
-        <List component="nav">
-          <ListItem>
-            <ListItemText primary="Item #1" />
-          </ListItem>
-          <Divider />
-          <ListItem>
-            <ListItemText primary="Item #2" />
-          </ListItem>
-          <Divider />
-          <ListItem>
-            <ListItemText primary="Item #3" />
-          </ListItem>
-          <Divider />
-        </List>
-        <Typography variant="body1">
-          The model comes in from window.models.userListModel()
-        </Typography>
-      </div>
+        <div>
+            <Typography variant="h4">Users List</Typography>
+            <List component="nav">
+                {userList.map((user) => (
+                    <React.Fragment key={user._id}>
+                        <ListItem>
+                            <Link to={{ pathname: `/users/${user._id}` }}>
+                                <ListItemText primary={user.first_name} />
+                            </Link>
+                        </ListItem>
+                        <Divider />
+                    </React.Fragment>
+                ))}
+            </List>
+            <Typography variant="body1">
+                Click on the item to know the details of each user.
+            </Typography>
+        </div>
     );
-  }
 }
 
 export default UserList;
