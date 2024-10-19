@@ -1,12 +1,13 @@
-# SSDI_MAIN_P6
+#GROUP 2#
 
 <h1>Scrum Team</h1>
 <h2> Product Owner</h2>
-Phani Kiran Reddy D
+Ankith Gopi Krishna Avula
 <h2>Scrum Master</h2>
-Neha Galla
+Vaishnav Reddy Dandu
 <h2>Developers</h2>
--  Moulya Madamanchi
--  Saketh Reddy Vallamreddy
--  Sai Sushma Gurram
--  Phiny Francis Govathoti
+-  Noor
+-  Pravalika M
+-  Navya Sree Ratakonda
+-  Ankith Gopi Krishna Avula
+-  Vaishnav Reddy Dandu
