@@ -1,11 +1,16 @@
 # PhotoShop Baseline Scrum - Group 10
 ## Product Owner
-- Sai Shanker Jaina
+- Ankith Gopi Krishna Avula
 
 ## Scrum Master
-- Pavan Vanjre Ravindranath
+- Lakshmi Vaishnav Reddy Dandu
 
 ## Developers
-- Sai Vivek Chinna Burada
-- Mounika Chundru
-- Niveditha kalva
+- Noor Mohammed Vempalli
+- Navya Sree Ratakonda
+- Pravalika Megavath
+**note** :
+  Kindly follow the below command while testing our project as i haven't uploaded the node modules
+
+   **npm install**
+  
