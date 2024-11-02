@@ -1,4 +1,4 @@
-# PhotoShop Baseline Scrum - Group 10
+# Group 2
 ## Product Owner
 - Ankith Gopi Krishna Avula
 
@@ -9,8 +9,5 @@
 - Noor Mohammed Vempalli
 - Navya Sree Ratakonda
 - Pravalika Megavath
-**note** :
-  Kindly follow the below command while testing our project as i haven't uploaded the node modules
-
-   **npm install**
-  
+- Ankith Gopi Krishna Avula
+- Vaishnav Reddy Dandu
