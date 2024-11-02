@@ -1,0 +1,38 @@
+/*
+CSS for the project #5 main page
+
+Since CSS uses a global name space for classes we should use class names starting with
+main- here.
+*/
+
+.main-topbar-buffer {
+  margin-top: 4rem;
+  position: sticky;
+}
+
+.main-grid-item {
+  height: calc(100vh - 85px);
+  padding: 10px;
+}
+
+.auto-height {
+  height: auto;
+  padding: 15px;
+}
+.position-fixed {
+  position: fixed;
+}
+.details-grid {
+  height: 90vh;
+  overflow-y: scroll;
+}
+.center{
+  display: flex;
+  justify-content: center;
+}
+
+.main-grid-login {
+  width: 20rem;
+  height: 27rem;
+  padding: 12px;
+}
