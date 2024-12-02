@@ -1,81 +1,76 @@
-
 import React from 'react';
-import { Box,Paper,Typography, Button, Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
-import './userDetail.css';
-import axios from 'axios'; // Import Axios
+import { Typography, Button } from '@mui/material'; // Import Button from Material-UI
+import './userDetail.css'; // Change this if you create a specific CSS for user details
+// import fetchModel from '../../lib/fetchModelData';
+import axios from "../axios/axios";
 
 
 class UserDetail extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      user: null,
+      user: {},
     };
+
+    this.getUserDetails();
   }
 
-  componentDidMount() {
-    this.fetchUserDetails();
-  }
+  handleViewPhotosClick = () => {
+    // Implement navigation to the user's photos when the button is clicked
+    const { history, match } = this.props;
+    const userId = match.params.userId;
+    history.push(`/photos/${userId}`);
+  };
 
-  componentDidUpdate(prevProps) {
-    const { match } = this.props;
-    const { userId } = match.params;
-
-    if (prevProps.match.params.userId !== userId || !this.state.user) {
-      this.fetchUserDetails();
-    }
-  }
-
-  fetchUserDetails() {
-    const { match } = this.props;
-    const { userId } = match.params;
-
-    // Use Axios to fetch user details from the server
-    axios.get(`/user/${userId}`)
-      .then((response) => {
-        this.setState({ user: response.data });
-      })
-      .catch((error) => {
-        console.error('Error fetching user details:', error);
-      });
+  getUserDetails() {
+    axios.get(`/user/${this.props.match.params.userId}`).then(
+      (data) => {
+        this.setState({ user: data.data });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   render() {
-    const { user } = this.state;
-    return (
-      <div>
-        {user ? (
-          <div>
-            <Grid container justifyContent="center">
-              <Grid item>
-                <Button
-                  component={Link}
-                  to={`/photos/${user._id}`}
-                  variant="contained"
-                  color="primary"
-                >
-                  User Photos
-                </Button>
-              </Grid>
-            </Grid>
-
-            <Box display="flex" justifyContent="center" m={2}>
-              <Paper elevation={3} sx={{ padding: 4, maxWidth: 600, width: '100%' }}>
-                <Typography variant="h3" gutterBottom>User Profile</Typography>
-                <Typography variant="body1"><strong>First Name:</strong> {user.first_name}</Typography>
-                <Typography variant="body1"><strong>Last Name:</strong> {user.last_name}</Typography>
-                <Typography variant="body1"><strong>Location:</strong> {user.location}</Typography>
-                <Typography variant="body1"><strong>Description:</strong> {user.description}</Typography>
-                <Typography variant="body1"><strong>Occupation:</strong> {user.occupation}</Typography>
-              </Paper>
-            </Box>
-          </div>
-        ) : (
-          <Typography variant="body1" className="user-detail-box loading-text">
-            Loading user details...
+    return this.state.user.length === 0 ? (
+      <p>Loading user details</p>
+    ) : (
+      <div className='user-details-container'>
+        <Typography
+          className='user-details-header'
+          variant='h2'
+          sx={{ fontSize: '40px' }}
+        >
+          User Details
+        </Typography>
+        <div className='user-details-main'>
+          <Typography variant='body1'>
+            <strong>Name: </strong>
+            {`${this.state.user.first_name} ${this.state.user.last_name}`}
           </Typography>
-        )}
+          <Typography variant='body1'>
+            <strong>Location: </strong>
+            {this.state.user.location}
+          </Typography>
+          <Typography variant='body1'>
+            <strong>Description: </strong>
+            {this.state.user.description}
+          </Typography>
+          <Typography variant='body1'>
+            <strong>Occupation: </strong>
+            {this.state.user.occupation}
+          </Typography>
+        </div>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={this.handleViewPhotosClick}
+        >
+          View Photos
+        </Button>
       </div>
     );
   }

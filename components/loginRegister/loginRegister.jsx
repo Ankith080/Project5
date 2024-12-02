@@ -1,211 +1,266 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
-import {
-  Button,
-  Box,
-  TextField,
-  Alert,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography
-} from '@mui/material';
-import axios from 'axios';
+import React, { useState } from 'react';
+
+import { Typography, TextField, Box, Button, Grid, Alert } from '@mui/material';
+
+import './loginRegister.css';
+import axios from "../axios/axios";
+
+
+function LoginModal(props) {
+  let [invalidLogin, setInvalidLogin] = useState(false);
+
+  const LoginRequest = (event) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const plain = Object.fromEntries(data.entries());
+
+    axios.post('/admin/login', plain).then(
+      (res) => {
+        // console.log(res.data);
+        props.SetUser(res.data, true);
+        debugger
+      },
+      (err) => {
+        console.log(err?.response?.status);
+        setInvalidLogin(true);
+      }
+    );
+  };
+
+  return (
+    <>
+      {invalidLogin ? (
+        <Alert severity='error'>
+          Incorrect Login Name or Password. Try again.
+        </Alert>
+      ) : (
+        ''
+      )}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Box component='form' onSubmit={LoginRequest}>
+          <Typography component='h1' variant='h5'>
+            Sign In
+          </Typography>
+
+          <TextField
+            margin='normal'
+            required
+            autoFocus
+            fullWidth
+            label='Login Name'
+            name='login_name'
+            id='login_name'
+          />
+
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            label='Password'
+            name='password'
+            type='password'
+            id='password'
+          />
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Login
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Button
+                onClick={props.SwitchModes}
+                variant='contained'
+                color='grey'
+              >
+                {"Don't have an account? Sign Up"}
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </>
+  );
+}
+
+function RegisterModal(props) {
+  let [, setInvalidRegister] = useState(false);
+
+  const RegistrationRequest = (event) => {
+    event.preventDefault();
+    // TODO: Add registration functionality
+    const data = new FormData(event.currentTarget);
+    const plain = Object.fromEntries(data.entries());
+
+    axios.post('/user', plain).then(
+      (res) => {
+        // console.log(res.data);
+        props.SetUser(res.data, true);
+      },
+      (err) => {
+        console.log(err?.response?.status);
+        setInvalidRegister(true);
+      }
+    );
+  };
+
+  return (
+    <Box
+      my={4}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Box component='form' onSubmit={RegistrationRequest}>
+        <Typography component='h1' variant='h5'>
+          Register
+        </Typography>
+
+        <TextField
+          margin='normal'
+          required
+          autoFocus
+          fullWidth
+          label='Login Name'
+          name='login_name'
+          id='login_name'
+        />
+
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          label='Password'
+          name='password'
+          id='password'
+          type='password'
+        />
+
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          label='Verify Password'
+          name='password2'
+          id='password2'
+          type='password'
+        />
+        <TextField
+          margin='normal'
+          required
+          label='First Name'
+          name='first_name'
+          id='first_name'
+          sx={{ width: '50%' }}
+        />
+        <TextField
+          margin='normal'
+          required
+          label='Last Name'
+          name='last_name'
+          id='last_name'
+          sx={{ width: '50%' }}
+        />
+
+        <TextField
+          margin='normal'
+          required
+          label='Occupation'
+          name='occupation'
+          id='occupation'
+          sx={{ width: '50%' }}
+        />
+
+        <TextField
+          margin='normal'
+          required
+          label='Location'
+          name='location'
+          id='location'
+          sx={{ width: '50%' }}
+        />
+
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          multiline
+          label='Description'
+          name='description'
+          id='description'
+        />
+
+        <Button
+          type='submit'
+          fullWidth
+          variant='contained'
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Login
+        </Button>
+        <Grid container>
+          <Grid item>
+            <Button
+              onClick={props.SwitchModes}
+              variant='contained'
+              color='grey'
+            >
+              {'Return to Login'}
+            </Button>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+  );
+}
 
 class LoginRegister extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      user: {
-        first_name: '',
-        last_name: '',
-        location: '',
-        description: '',
-        occupation: '',
-        login_name: '',
-        password: '',
-        password_repeat: '',
-      },
-      showLoginError: false,
-      showRegistrationError: false,
-      showRegistrationSuccess: false,
-      openRegistration: false,
-      showRequiredFieldsWarning: false,
+      isRegistering: false,
     };
 
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleShowRegistration = this.handleShowRegistration.bind(this);
-    this.handleCloseRegistration = this.handleCloseRegistration.bind(this);
-  }
+    this.UpdateRegistering = () => this.setState({ isRegistering: !this.state.isRegistering });
 
-  handleShowRegistration = () => {
-    this.setState({
-      openRegistration: true,
-      showRegistrationError: false,
-      showRequiredFieldsWarning: false,
-    });
-  };
-
-  handleCloseRegistration = () => {
-    this.setState({
-      openRegistration: false,
-      showRegistrationSuccess: false,
-      showRegistrationError: false,
-      showRequiredFieldsWarning: false,
-    });
-  };
-
-  handleLogin = () => {
-    const currentState = JSON.stringify(this.state.user);
-    axios.post(
-      "/admin/login",
-      currentState,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      .then((response) => {
-        const user = response.data;
-        this.setState({
-          showLoginError: false,
-          showRegistrationSuccess: false,
-          showRegistrationError: false,
-        });
-        this.props.changeUser(user);
-      })
-      .catch(error => {
-        this.setState({
-          showLoginError: true,
-          showRegistrationSuccess: false,
-          showRegistrationError: false,
-        });
-        console.log(error);
-      });
-  };
-
-  handleRegister = () => {
-    // Validate matching passwords
-    if (this.state.user.password !== this.state.user.password_repeat) {
-      this.setState({
-        showRegistrationError: true,
-        showRequiredFieldsWarning: false,
-      });
-      // eslint-disable-next-line no-alert
-      alert("Passwords don't match");
-      return;
-    }
-
-    // Check for required fields
-    const requiredFields = ['login_name', 'password', 'password_repeat', 'first_name', 'last_name'];
-    if (requiredFields.some(field => !this.state.user[field])) {
-      this.setState({
-        showRequiredFieldsWarning: true,
-        showRegistrationError: false,
-      });
-      return;
-    }
-
-    const currentState = JSON.stringify(this.state.user);
-    axios.post(
-      "/user/",
-      currentState,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      .then((response) => {
-        const user = response.data;
-        this.setState({
-          showRegistrationSuccess: true,
-          showRegistrationError: false,
-          showLoginError: false,
-          openRegistration: false,
-          showRequiredFieldsWarning: false,
-        });
-        this.props.changeUser(user);
-      })
-      .catch(error => {
-        this.setState({
-          showRegistrationError: true,
-          showLoginError: false,
-          showRegistrationSuccess: false,
-          showRequiredFieldsWarning: false,
-        });
-        console.log(error);
-      });
-  };
-
-  handleChange(event) {
-    // eslint-disable-next-line no-return-assign
-    this.setState((state) => state.user[event.target.id] = event.target.value);
+    axios.post('/admin/session/resume', {}).then(
+      (res) => {
+        this.props.SetUser(res.data, true);
+      },
+      () => {
+        console.log('New Session. User Must Login');
+      }
+    );
   }
 
   render() {
-    return this.state.user ? (
+    return (
       <div>
-        <Box component="form" autoComplete="off">
-          {this.state.showLoginError && <Alert severity="error">Login Failed</Alert>}
-          {this.state.showRegistrationError && <Alert severity="error">Please correct the registration details.</Alert>}
-          {this.state.showRegistrationSuccess && <Alert severity="success">Registration Succeeded</Alert>}
-          <div>
-            <TextField id="login_name" label="Login Name" variant="outlined" fullWidth
-              margin="normal" required={true} onChange={this.handleChange} />
-          </div>
-          <div>
-            <TextField id="password" label="Password" variant="outlined" fullWidth
-              margin="normal" type="password" required={true} onChange={this.handleChange} />
-          </div>
-          <Box mb={2}>
-            <Button type="submit" variant="contained" onClick={this.handleLogin}>
-              Login
-            </Button>
-          </Box>
-        </Box>
-        <Box>
-          <Button variant="contained" onClick={this.handleShowRegistration}>
-            Register
-          </Button>
-          <Dialog open={this.state.openRegistration} onClose={this.handleCloseRegistration}>
-            <DialogTitle>User Registration</DialogTitle>
-            <DialogContent>
-              {this.state.showRequiredFieldsWarning && <Alert severity="warning">Please fill in all required fields.</Alert>}
-              <Box>
-                <TextField id="login_name" label="Login Name" variant="outlined" fullWidth
-                  margin="normal" required={true} onChange={this.handleChange} />
-                <TextField id="password" label="Password" variant="outlined" fullWidth
-                  margin="normal" type="password" required={true} onChange={this.handleChange} />
-                <TextField id="password_repeat" label="Repeat Password" variant="outlined" fullWidth
-                  margin="normal" type="password" required={true} onChange={this.handleChange} />
-                <TextField id="first_name" label="First Name" variant="outlined" fullWidth
-                  margin="normal" autoComplete="off" required={true} onChange={this.handleChange} />
-                <TextField id="last_name" label="Last Name" variant="outlined" fullWidth
-                  margin="normal" required={true} onChange={this.handleChange} />
-                <TextField id="location" label="Location" variant="outlined" fullWidth
-                  margin="normal" onChange={this.handleChange} />
-                <TextField id="description" label="Description" variant="outlined" multiline rows={4}
-                  fullWidth margin="normal" onChange={this.handleChange} />
-                <TextField id="occupation" label="Occupation" variant="outlined" fullWidth
-                  margin="normal" onChange={this.handleChange} />
-              </Box>
-            </DialogContent>
-            <DialogActions>
-              <Button variant="contained" onClick={this.handleRegister}>
-                Register Me
-              </Button>
-              <Button variant="outlined" onClick={this.handleCloseRegistration}>
-                Close
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
+        {!this.state.isRegistering ? (
+          <LoginModal
+            SetUser={this.props.SetUser}
+            SwitchModes={this.UpdateRegistering}
+          />
+        ) : (
+          <RegisterModal
+            SetUser={this.props.SetUser}
+            SwitchModes={this.UpdateRegistering}
+          />
+        )}
       </div>
-    ) : (
-      <div />
     );
   }
 }
