@@ -369,7 +369,7 @@ describe("Photo App: Server API Tests", function () {
                 assert.strictEqual(
                   real_photos.length,
                   photos.length,
-                  "wrong number of photos returned"
+                  `wrong number of photos returned ${id}`
                 );
                 _.forEach(real_photos, function (real_photo) {
                   const matches = _.filter(photos, {

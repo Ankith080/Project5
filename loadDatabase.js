@@ -4,7 +4,7 @@
  *     node loadDatabase.js
  * Be sure to have an instance of the MongoDB running on the localhost.
  *
- * This script loads the data into the MongoDB database named 'project7'.
+ * This script loads the data into the MongoDB database named 'project6'.
  * In loads into collections named User and Photos. The Comments are added in
  * the Photos of the comments. Any previous objects in those collections are
  * discarded.
@@ -14,7 +14,7 @@
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://127.0.0.1/project7", {
+mongoose.connect("mongodb://127.0.0.1/project6", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -138,7 +138,8 @@ Promise.all(removePromises)
     });
 
     allPromises.then(function () {
-      mongoose.disconnect();
+      mongoose.disconnect()
+        .then(() => { console.log("loadDatabase Completed"); });
     });
   })
   .catch(function (err) {

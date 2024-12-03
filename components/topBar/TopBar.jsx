@@ -53,7 +53,7 @@ function TopBar(props) {
 		<AppBar className='topbar-appBar' position='absolute'>
 			<Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<Typography variant='h5' color='inherit'>
-					G3
+					Group 2
 				</Typography>
 				<Typography variant="h5" color='inherit'>
 					{props.AppState.isLoggedIn ?

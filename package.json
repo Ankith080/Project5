@@ -1,5 +1,5 @@
 {
-  "name": "project7",
+  "name": "project6",
   "version": "1.0.0",
   "private": true,
   "description": "Project 6: Appserver and Database (React)",
@@ -7,20 +7,20 @@
   "scripts": {
     "build": "webpack --devtool eval-cheap-module-source-map",
     "build:w": "webpack --devtool eval-cheap-module-source-map --watch",
+    "watch": "watch 'npm run build' ./webServer.js",
     "lint": "eslint webServer.js loadDatabase.js *.jsx components/*/*.jsx || exit 0",
     "start": "npm run build && node webServer.js"
   },
-  },
-  
   "author": "Mendel Rosenblum <mendel@cs.stanford.edu> ",
   "contributors": [
     "Todd Dobbs <btdobbs@uncc.edu> (https://orcid.org/0000-0001-6711-6962)"
   ],
   "license": "ISC",
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.11.8",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
     "@mui/styles": "^5.11.7",
     "@mui/system": "^5.11.8",
     "@popperjs/core": "^2.11.5",
@@ -28,21 +28,24 @@
     "axios": "^0.21.4",
     "babel-plugin-lodash": "^3.3.4",
     "bluebird": "^3.5.3",
-    "body-parser": "^1.20.2",
-    "express": "^4.18.1",
-    "express-session": "^1.18.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
     "file-loader": "^6.2.0",
     "js-yaml": "^4.1.0",
-    "mongoose": "^6.12.7",
+    "mongoose": "^6.13.3",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.16",
     "prismjs": "^1.26.0",
     "promise": "^8.1.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-mentions": "^4.4.10",
     "react-router": "^5.1.12",
     "react-router-dom": "^5.1.12",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "watch": "^1.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
