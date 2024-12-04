@@ -1,0 +1,34 @@
+PROJECT DESCRIPTION:
+
+The Photo Management and Sharing Application enables users to upload, organize, edit, and share their photographs effortlessly. The software offers an easy interface with features such as user identification, photo uploading from devices or cloud storage, and organization into customizable albums. Users can improve their photographs using fundamental editing tools, including filters, cropping, and edits, while preserving privacy by configuring albums as private or sharing them with designated individuals. The application facilitates social network integration, allowing for effortless sharing. The application, constructed using React, Node.js, Express, and MongoDB, guarantees a seamless and secure experience, incorporating cloud storage solutions such as AWS S3 for picture storage and JWT/OAuth for secure authentication. The objective is to provide an intuitive platform for the efficient management and sharing of personal photo collections.
+
+Project Scope:
+
+The scope of the Photo Management and Sharing App includes the design, development, and deployment of a user-friendly platform that allows individuals to manage, edit, and share their photo collections.
+
+Objectives:
+
+1)User-Friendly Experience
+2)Secure Photo Management
+3)Seamless Photo Editing
+4)Privacy and Control
+5)Effortless Sharing
+6)Efficient Organization and Search
+7)Cross-Platform Accessibility
+8)Scalability and Flexibility
+
+USER STORIES:
+1)@mentions in comments:
+
+With @mentions in comments on the picture, users can tag other people in their picture posts. This makes it easy to let people know about certain photos. People can name more than one person in a comment, and each person will be notified of the mention. There are links in the notifications to the picture or album where the person was tagged. Users can easily find people to mention by typing "@" and then clicking on their name. There will be a list of all the pictures where the user has been tagged in a history of mentions in their profile. Also, users will be notified if someone responds to a comment that mentions them. This keeps them up to date on conversations that are still going on. This function makes socializing easier by keeping users connected to their photos and friends.
+
+2)Visibility control on photos:
+
+The Visibility Control allows users to choose who can see their pictures and comments by using the Visibility Control feature for photos. Customers can choose which people can see their uploaded photos when they do so. The picture will be seen by everyone if no list is given. People on the picture owner's sharing list, on the other hand, are the only ones who can see the photo and comment on it. If there is no one on the list of people who can see the picture, only the owner can. The app will only show pictures that the user is allowed to see. This will require changes to the schema for keeping track of permissions and queries that check the user's access rights before returning photos.
+
+3)Photo like votes:
+Like the "Like" button on Facebook, the "Photo Like Votes" tool lets users like or dislike photos. When someone hits the "like" button, it turns into a "unlike" button. If they click it again, they can take away their likes. Next to each photo's "like" button will show the number of likes that photo has received. This number will change right away whenever a user likes or dislikes a photo. The pictures on a user's profile page will also be arranged by how many likes they have, with the most liked photos at the top. When two pictures have the same number of likes, the one with the most recent upload will be put at the top. The system will check each like to make sure it's real and deal with any problems that might come up, especially in big systems. The schema for the picture will need to be changed to store the likes, and the server will validate the data to make sure it works right.
+
+
+
+YOUTUBE VIDEO PRESENTATION LINK: https://youtu.be/99fGV6zKDOc
